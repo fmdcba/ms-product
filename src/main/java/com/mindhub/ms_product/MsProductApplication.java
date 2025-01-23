@@ -1,6 +1,6 @@
 package com.mindhub.ms_product;
 
-import com.mindhub.ms_product.Repositories.ProductRepository;
+import com.mindhub.ms_product.repositories.ProductRepository;
 import com.mindhub.ms_product.models.Product;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package com.mindhub.ms_product.Repositories;
+package com.mindhub.ms_product.repositories;
 
 import com.mindhub.ms_product.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

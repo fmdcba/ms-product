@@ -1,6 +1,6 @@
 package com.mindhub.ms_product.services.Impl;
 
-import com.mindhub.ms_product.Repositories.ProductRepository;
+import com.mindhub.ms_product.repositories.ProductRepository;
 import com.mindhub.ms_product.dtos.ProductDTO;
 import com.mindhub.ms_product.exceptions.NotFoundException;
 import com.mindhub.ms_product.mappers.ProductMapper;
