@@ -5,6 +5,8 @@ import com.mindhub.ms_product.exceptions.NotFoundException;
 import com.mindhub.ms_product.exceptions.NotValidArgumentException;
 import com.mindhub.ms_product.models.Product;
 import com.mindhub.ms_product.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,10 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get product by id", description = "Return product if ID is valid and exists in DB")
+        @ApiResponse(responseCode = "200", description = "Return product, and http code status OK")
+        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Invalid ID")
+        @ApiResponse(responseCode = "404", description = "Error msg: Not found")
     public ResponseEntity<?> getProduct(@PathVariable long id) throws NotValidArgumentException, NotFoundException {
         isValidId(id);
         ProductDTO product = productService.getProduct(id);
@@ -27,18 +33,27 @@ public class ProductController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all products", description = "Return all products in DB")
+        @ApiResponse(responseCode = "200", description = "Return list of products, and http code status OK")
     public ResponseEntity<?> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping
+    @Operation(summary = "Create product", description = "Return product if ID is valid and exists in DB")
+        @ApiResponse(responseCode = "200", description = "Return created product, and http code status OK")
+        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Indicating the field that cause the error")
     public ResponseEntity<?> createProduct(@RequestBody ProductDTO newProduct) {
         Product newProductEntity = productService.createProduct(newProduct);
         return new ResponseEntity<>(newProductEntity, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update product", description = "Return product if ID is valid and exists in DB")
+        @ApiResponse(responseCode = "200", description = "Return updated product, and http code status OK")
+        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Invalid ID")
+        @ApiResponse(responseCode = "404", description = "Error msg: Not found")
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) throws NotFoundException, NotValidArgumentException {
         validateEntries(updatedProduct);
         Product updatedProductToEntity = productService.updateProduct(id, updatedProduct);
@@ -46,6 +61,10 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Update product", description = "Return product if ID is valid and exists in DB")
+        @ApiResponse(responseCode = "200", description = "Return msg: Product deleted successfully, and http code status OK")
+        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Indicating the field that cause the error")
+        @ApiResponse(responseCode = "404", description = "Error msg: Not found")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) throws NotValidArgumentException, NotFoundException {
         isValidId(id);
         productService.deleteProduct(id);
