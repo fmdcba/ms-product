@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update product", description = "Return product if ID is valid and exists in DB")
+    @Operation(summary = "Update product", description = "Return updated product if ID is valid and exists in DB")
         @ApiResponse(responseCode = "200", description = "Return updated product, and http code status OK")
         @ApiResponse(responseCode = "400", description = "Error msg Bad request: Invalid ID")
         @ApiResponse(responseCode = "404", description = "Error msg: Not found")
@@ -61,9 +61,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Update product", description = "Return product if ID is valid and exists in DB")
+    @Operation(summary = "Update product", description = "Return msg of operation completed successfully")
         @ApiResponse(responseCode = "200", description = "Return msg: Product deleted successfully, and http code status OK")
-        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Indicating the field that cause the error")
+        @ApiResponse(responseCode = "400", description = "Error msg Bad request: Invalid ID")
         @ApiResponse(responseCode = "404", description = "Error msg: Not found")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) throws NotValidArgumentException, NotFoundException {
         isValidId(id);
