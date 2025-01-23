@@ -2,6 +2,7 @@ package com.mindhub.ms_product.services.Impl;
 
 import com.mindhub.ms_product.Repositories.ProductRepository;
 import com.mindhub.ms_product.dtos.ProductDTO;
+import com.mindhub.ms_product.exceptions.NotFoundException;
 import com.mindhub.ms_product.mappers.ProductMapper;
 import com.mindhub.ms_product.models.Product;
 import com.mindhub.ms_product.services.ProductService;
@@ -20,8 +21,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Override
-    public ProductDTO getProduct(Long id) throws Exception {
-        return productMapper.productToDTO(findById(id));
+    public ProductDTO getProduct(Long id) throws NotFoundException {
+        if (existsById(id)) {
+            return productMapper.productToDTO(findById(id));
+        } else {
+            throw new NotFoundException("Not found.");
+        }
     }
 
     @Override
@@ -35,19 +40,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, ProductDTO updatedProduct) throws Exception {
-        Product productToUpdate = findById(id);
-        return save(productMapper.updateProductToEntity(productToUpdate, updatedProduct));
+    public Product updateProduct(Long id, ProductDTO updatedProduct) throws NotFoundException {
+        if (existsById(id)) {
+            Product productToUpdate = findById(id);
+            return save(productMapper.updateProductToEntity(productToUpdate, updatedProduct));
+        } else {
+            throw new NotFoundException("Not found.");
+        }
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        deleteById(id);
+    public void deleteProduct(Long id) throws NotFoundException {
+        if (existsById(id)) {
+            deleteById(id);
+        } else {
+            throw new NotFoundException("Not found.");
+        }
     }
 
     @Override
-    public Product findById(Long id) throws Exception {
-        return (productRepository.findById(id).orElseThrow(() -> new Exception("Not Found.")));
+    public Product findById(Long id) throws NotFoundException {
+        return (productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found.")));
     }
 
     @Override
@@ -56,12 +69,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
 
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public Boolean existsById(Long id) {
+        return productRepository.existsById(id);
     }
 }

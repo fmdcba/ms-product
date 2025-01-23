@@ -1,6 +1,8 @@
 package com.mindhub.ms_product.controllers;
 
 import com.mindhub.ms_product.dtos.ProductDTO;
+import com.mindhub.ms_product.exceptions.NotFoundException;
+import com.mindhub.ms_product.exceptions.NotValidArgumentException;
 import com.mindhub.ms_product.models.Product;
 import com.mindhub.ms_product.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable long id) throws Exception {
+    public ResponseEntity<?> getProduct(@PathVariable long id) throws NotValidArgumentException, NotFoundException {
+        isValidId(id);
         ProductDTO product = productService.getProduct(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -36,14 +39,53 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) throws Exception {
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) throws NotFoundException, NotValidArgumentException {
+        validateEntries(updatedProduct);
         Product updatedProductToEntity = productService.updateProduct(id, updatedProduct);
         return new ResponseEntity<>(updatedProductToEntity, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) throws NotValidArgumentException, NotFoundException {
+        isValidId(id);
         productService.deleteProduct(id);
         return new ResponseEntity<>("Product deleted successfully.", HttpStatus.OK);
+    }
+
+    public void isValidId(Long id) throws NotValidArgumentException {
+        if (id == null || id <= 0) {
+            throw new NotValidArgumentException("Invalid ID");
+        }
+    }
+
+    public void isValidName(String name) throws NotValidArgumentException {
+        if (name == null || name.isBlank()) {
+            throw new NotValidArgumentException("Name cannot be empty.");
+        }
+    }
+
+    public void isValidDescription(String description) throws NotValidArgumentException {
+        if (description == null || description.isBlank()) {
+            throw new NotValidArgumentException("Description cannot be empty.");
+        }
+    }
+
+    public void isValidPrice(Double price) throws NotValidArgumentException {
+        if (price == null) {
+            throw new NotValidArgumentException("Price cannot be null.");
+        }
+    }
+
+    public void isValidStock(Integer stock) throws NotValidArgumentException {
+        if (stock == null || stock <= 0) {
+            throw new NotValidArgumentException("Stock has to be at least 1");
+        }
+    }
+
+    public void validateEntries(ProductDTO product) throws NotValidArgumentException {
+        isValidName(product.getName());
+        isValidDescription(product.getDescription());
+        isValidPrice(product.getPrice());
+        isValidStock(product.getStock());
     }
 }
