@@ -22,10 +22,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProduct(Long id) throws NotFoundException {
-        if (existsById(id)) {
+        try {
             return productMapper.productToDTO(findById(id));
-        } else {
-            throw new NotFoundException("Not found.");
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -41,27 +41,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Long id, ProductDTO updatedProduct) throws NotFoundException {
-        if (existsById(id)) {
+        try {
             Product productToUpdate = findById(id);
             return save(productMapper.updateProductToEntity(productToUpdate, updatedProduct));
-        } else {
-            throw new NotFoundException("Not found.");
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
         }
     }
 
     @Override
     public Product patchProduct(Long id, ProductDTO updatedProduct) throws NotFoundException {
-        Product productToUpdate = findById(id);
-        return save(productMapper.patchProductToEntity(productToUpdate, updatedProduct));
+        try {
+            Product productToUpdate = findById(id);
+            return save(productMapper.patchProductToEntity(productToUpdate, updatedProduct));
+        } catch (NotFoundException e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 
 
     @Override
     public void deleteProduct(Long id) throws NotFoundException {
-        if (existsById(id)) {
+        try {
+            existsById(id);
             deleteById(id);
-        } else {
-            throw new NotFoundException("Not found.");
+        } catch (NotFoundException e){
+            throw new NotFoundException(e.getMessage());
         }
     }
 
@@ -86,7 +91,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean existsById(Long id) {
-        return productRepository.existsById(id);
+    public void existsById(Long id) throws NotFoundException {
+        if (!productRepository.existsById(id)) {
+            throw new NotFoundException("Product not found.");
+        }
     }
 }

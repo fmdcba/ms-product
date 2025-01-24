@@ -1,5 +1,7 @@
 package com.mindhub.ms_product.services;
 
+import com.mindhub.ms_product.exceptions.NotFoundException;
+
 import java.util.List;
 
 public interface GenericService<E> {
@@ -7,5 +9,5 @@ public interface GenericService<E> {
     List<E> findAll();
     void deleteById(Long id);
     E save(E entity);
-    Boolean existsById(Long id);
+    void existsById(Long id) throws NotFoundException;
 }
