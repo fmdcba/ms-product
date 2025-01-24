@@ -44,7 +44,8 @@ public class ProductController {
     @Operation(summary = "Create product", description = "Return product if ID is valid and exists in DB")
         @ApiResponse(responseCode = "200", description = "Return created product, and http code status OK")
         @ApiResponse(responseCode = "400", description = "Error msg Bad request: Indicating the field that cause the error")
-    public ResponseEntity<?> createProduct(@RequestBody ProductDTO newProduct) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductDTO newProduct) throws NotValidArgumentException {
+        validateEntries(newProduct);
         Product newProductEntity = productService.createProduct(newProduct);
         return new ResponseEntity<>(newProductEntity, HttpStatus.OK);
     }
@@ -90,13 +91,13 @@ public class ProductController {
 
     public void isValidName(String name) throws NotValidArgumentException {
         if (name == null || name.isBlank()) {
-            throw new NotValidArgumentException("Name cannot be empty.");
+            throw new NotValidArgumentException("Name cannot be empty or null.");
         }
     }
 
     public void isValidDescription(String description) throws NotValidArgumentException {
         if (description == null || description.isBlank()) {
-            throw new NotValidArgumentException("Description cannot be empty.");
+            throw new NotValidArgumentException("Description cannot be empty or null.");
         }
     }
 
