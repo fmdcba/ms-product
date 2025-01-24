@@ -29,4 +29,21 @@ public class ProductMapper {
 
         return productToUpdate;
     }
+
+    public Product patchProductToEntity (Product productToUpdate, ProductDTO updatedProduct) {
+        if (updatedProduct.getName() != null) {
+            productToUpdate.setName(updatedProduct.getName());
+        }
+        if (updatedProduct.getDescription() != null) {
+            productToUpdate.setDescription(updatedProduct.getDescription());
+        }
+        if (updatedProduct.getPrice() != null) {
+            productToUpdate.setPrice(updatedProduct.getPrice());
+        }
+        if (updatedProduct.getStock() != null) {
+            productToUpdate.setStock(updatedProduct.getStock());
+        }
+
+        return productToUpdate;
+    }
 }

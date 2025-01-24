@@ -60,8 +60,19 @@ public class ProductController {
         return new ResponseEntity<>(updatedProductToEntity, HttpStatus.OK);
     }
 
+    @PatchMapping("/{id}")
+    @Operation(summary = "Patch product", description = "Return patched product if ID is valid and exists in DB")
+    @ApiResponse(responseCode = "200", description = "Return patched product, and http code status OK")
+    @ApiResponse(responseCode = "400", description = "Error msg Bad request: Pointing out that not all fields can be null or empty")
+    @ApiResponse(responseCode = "404", description = "Error msg: Not found")
+    public ResponseEntity<?> patchProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) throws NotFoundException, NotValidArgumentException {
+        validateEmptyEntries(updatedProduct);
+        Product updatedProductToEntity = productService.patchProduct(id, updatedProduct);
+        return new ResponseEntity<>(updatedProductToEntity, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    @Operation(summary = "Update product", description = "Return msg of operation completed successfully")
+    @Operation(summary = "Delete product", description = "Return msg of operation completed successfully")
         @ApiResponse(responseCode = "200", description = "Return msg: Product deleted successfully, and http code status OK")
         @ApiResponse(responseCode = "400", description = "Error msg Bad request: Invalid ID")
         @ApiResponse(responseCode = "404", description = "Error msg: Not found")
@@ -97,7 +108,7 @@ public class ProductController {
 
     public void isValidStock(Integer stock) throws NotValidArgumentException {
         if (stock == null || stock <= 0) {
-            throw new NotValidArgumentException("Stock has to be at least 1");
+            throw new NotValidArgumentException("Stock has to be at least 1.");
         }
     }
 
@@ -106,5 +117,11 @@ public class ProductController {
         isValidDescription(product.getDescription());
         isValidPrice(product.getPrice());
         isValidStock(product.getStock());
+    }
+
+    public void validateEmptyEntries(ProductDTO product) throws NotValidArgumentException {
+        if (product.getName() == null && product.getDescription() == null && product.getPrice() == null && product.getStock() == null) {
+            throw new NotValidArgumentException("When patching product at least one field must not be null or empty.");
+        }
     }
 }

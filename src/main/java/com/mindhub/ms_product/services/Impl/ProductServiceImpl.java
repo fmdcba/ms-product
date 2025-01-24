@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return  productMapper.productListToDTO(productRepository.findAll());
+        return productMapper.productListToDTO(productRepository.findAll());
     }
 
     @Override
@@ -50,6 +50,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product patchProduct(Long id, ProductDTO updatedProduct) throws NotFoundException {
+        Product productToUpdate = findById(id);
+        return save(productMapper.patchProductToEntity(productToUpdate, updatedProduct));
+    }
+
+
+    @Override
     public void deleteProduct(Long id) throws NotFoundException {
         if (existsById(id)) {
             deleteById(id);
@@ -60,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(Long id) throws NotFoundException {
-        return (productRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found.")));
+        return (productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not Found.")));
     }
 
     @Override

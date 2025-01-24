@@ -17,4 +17,6 @@ public interface ProductService extends GenericService<Product>{
     Product updateProduct(Long id, ProductDTO updatedProduct) throws NotFoundException;
 
     void deleteProduct(Long id) throws NotFoundException;
+
+    Product patchProduct(Long id, ProductDTO updatedProduct) throws NotFoundException;
 }
