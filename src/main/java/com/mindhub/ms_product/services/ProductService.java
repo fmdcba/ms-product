@@ -1,7 +1,9 @@
 package com.mindhub.ms_product.services;
 
 import com.mindhub.ms_product.dtos.ProductDTO;
+import com.mindhub.ms_product.exceptions.NotAuthorizedException;
 import com.mindhub.ms_product.exceptions.NotFoundException;
+import com.mindhub.ms_product.exceptions.NotValidArgumentException;
 import com.mindhub.ms_product.models.Product;
 
 import java.util.List;
@@ -10,13 +12,13 @@ public interface ProductService extends GenericService<Product>{
 
     ProductDTO getProduct(Long id) throws NotFoundException;
 
-    List<ProductDTO> getAllProducts();
+    List<ProductDTO> getAllProducts() throws NotFoundException;
 
-    Product createProduct(ProductDTO newProduct);
+    ProductDTO createProduct(ProductDTO newProduct) throws NotValidArgumentException, NotAuthorizedException;
 
-    Product updateProduct(Long id, ProductDTO updatedProduct) throws NotFoundException;
+    ProductDTO updateProduct(Long id, ProductDTO updatedProduct) throws NotFoundException, NotValidArgumentException, NotAuthorizedException;
 
-    void deleteProduct(Long id) throws NotFoundException;
+    ProductDTO patchProduct(Long id, ProductDTO updatedProduct) throws NotFoundException, NotValidArgumentException;
 
-    Product patchProduct(Long id, ProductDTO updatedProduct) throws NotFoundException;
+    void deleteProduct(Long id) throws NotFoundException, NotAuthorizedException;
 }

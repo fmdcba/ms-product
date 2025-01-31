@@ -1,5 +1,6 @@
 package com.mindhub.ms_product.exceptions;
 
+import jakarta.ws.rs.NotAuthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,5 +17,10 @@ public class ExceptionHandlers {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundExceptionException(NotFoundException notFoundException) {
         return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(jakarta.ws.rs.NotAuthorizedException.class)
+    public ResponseEntity<String> handleNotAuthorizedException(NotAuthorizedException notAuthorizedException) {
+        return new ResponseEntity<>(notAuthorizedException.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }
