@@ -15,14 +15,20 @@
 						{
 							"name": "Get Non-Existent Product",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -41,14 +47,20 @@
 						{
 							"name": "Get Product With Invalid ID",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -67,6 +79,12 @@
 						{
 							"name": "Create Product With Invalid Field",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -78,13 +96,19 @@
 										}
 									}
 								},
-								"url": "localhost:8082/api/products"
+								"url": "localhost:8080/api/products"
 							},
 							"response": []
 						},
 						{
 							"name": "Update Non-Existent Product",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -97,11 +121,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -120,6 +144,12 @@
 						{
 							"name": "Update With Null Name",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -132,11 +162,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -155,6 +185,12 @@
 						{
 							"name": "Patch Product With Empty field",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
@@ -167,11 +203,11 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -190,14 +226,20 @@
 						{
 							"name": "Delete Non-Existent Product",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{JWT}}"
+									}
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8082/api/products/:id",
+									"raw": "localhost:8080/api/products/:id",
 									"host": [
 										"localhost"
 									],
-									"port": "8082",
+									"port": "8080",
 									"path": [
 										"api",
 										"products",
@@ -221,11 +263,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8082/api/products/:id",
+							"raw": "localhost:8080/api/products/:id",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"products",
@@ -244,15 +286,27 @@
 				{
 					"name": "Get All Products",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{JWT}}"
+							}
+						},
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8082/api/products"
+						"url": "localhost:8080/api/products"
 					},
 					"response": []
 				},
 				{
 					"name": "Create Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{JWT}}"
+							}
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -264,13 +318,19 @@
 								}
 							}
 						},
-						"url": "localhost:8082/api/products"
+						"url": "localhost:8080/api/products"
 					},
 					"response": []
 				},
 				{
 					"name": "Update Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{JWT}}"
+							}
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -283,11 +343,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8082/api/products/:id",
+							"raw": "localhost:8080/api/products/:id",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"products",
@@ -306,6 +366,12 @@
 				{
 					"name": "Patch Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{JWT}}"
+							}
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -318,11 +384,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8082/api/products/:id",
+							"raw": "localhost:8080/api/products/:id",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"products",
@@ -341,14 +407,20 @@
 				{
 					"name": "Delete Product",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{JWT}}"
+							}
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8082/api/products/:id",
+							"raw": "localhost:8080/api/products/:id",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8080",
 							"path": [
 								"api",
 								"products",

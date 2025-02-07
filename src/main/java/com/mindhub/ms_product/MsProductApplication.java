@@ -17,7 +17,7 @@ public class MsProductApplication {
 	@Bean
 	CommandLineRunner initData(ProductRepository productRepository) {
 		return args -> {
-			Product product = new Product("Martillo", "Cabo de madera", 10.5, 17);
+			Product product = new Product("Martillo", "Cabo de madera", 10.5, 257);
 			Product product1 = new Product("Tornillo", "Para madera", 5.1, 199);
 
 			productRepository.save(product);
